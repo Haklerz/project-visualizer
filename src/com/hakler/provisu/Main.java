@@ -1,20 +1,32 @@
 package com.hakler.provisu;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Random;
 
-public class Main implements App {
+public class Main implements CallbackListener {
+
+	private Random random;
+
     public static void main(String[] args) {
-        new AppDriver(new Main(), 10000).run();
+        new Window("Project Visualizer", 16 * 64, 9 * 64, new Main(), 60).run();
     }
 
-    @Override
-    public void update(double deltaTimeSeconds) {
-        System.out.println("Update! dt=" + deltaTimeSeconds + "s");
-    }
+	public Main() {
+		this.random = new Random();
+	}
 
-    @Override
-    public void draw(Graphics2D graphics) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'draw'");
-    }
+	@Override
+	public void onUpdate(double deltaTimeSeconds) {
+		System.out.println("Update! dt = " + deltaTimeSeconds + "s");
+	}
+
+	@Override
+	public void onDraw(Graphics2D graphics) {
+		
+		for (int i = 0; i < 10_000; i++) {
+			graphics.setColor(new Color(random.nextInt()));
+			graphics.drawLine(random.nextInt(16 * 64), random.nextInt(9 * 64), random.nextInt(16 * 64), random.nextInt(9 * 64));
+		}
+	}
 }
